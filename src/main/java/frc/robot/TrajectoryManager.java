@@ -38,8 +38,6 @@ public class TrajectoryManager {
     
                 trajectories = new HashMap<>();
     
-                List<String> pathNames = new ArrayList<>();
-    
                 Path deployDirectory = Paths.get(Filesystem.getDeployDirectory().toString(), "PathWeaver/Paths");
                 File[] listOfFiles = deployDirectory.toFile().listFiles();
     
