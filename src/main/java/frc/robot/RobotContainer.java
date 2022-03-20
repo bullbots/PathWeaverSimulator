@@ -6,13 +6,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.JoystickDrive;
 import frc.robot.commands.TrajectoryBase;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -26,9 +26,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
     private final Drivetrain drivetrain = new Drivetrain();
-    
+    private final Joystick joystick = new Joystick(0);
     private final CommandBase autoCommand;
     
     
@@ -40,11 +39,9 @@ public class RobotContainer
 
         // Add commands to the autonomous command chooser
         autoCommand = new SequentialCommandGroup(
-                new TrajectoryBase(drivetrain, "PATH-1", false, false),//, // ... boolean isBackwards, boolean resetGyro
-                new TrajectoryBase(drivetrain, "PATH-2", false, false),//, // ... boolean isBackwards, boolean resetGyro
-                new TrajectoryBase(drivetrain, "PATH-3", false, false)//, // ... boolean isBackwards, boolean resetGyro
-//                new TrajectoryBase(drivetrain, "PATH-2", true, false),//,
-//                new TrajectoryBase(drivetrain, "PATH-3", true, false)//,
+            new TrajectoryBase(drivetrain, "PATH-1", false, false),//, // ... boolean isBackwards, boolean resetGyro
+            new TrajectoryBase(drivetrain, "PATH-2", false, false),//, // ... boolean isBackwards, boolean resetGyro
+            new TrajectoryBase(drivetrain, "PATH-3", false, false)//,
         );
     }
     
@@ -59,6 +56,7 @@ public class RobotContainer
     {
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+        drivetrain.setDefaultCommand(new JoystickDrive(drivetrain, joystick::getY, joystick::getX));
     }
     
     

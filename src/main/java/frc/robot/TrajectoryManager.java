@@ -10,6 +10,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Filesystem;
+import frc.robot.subsystems.Drivetrain;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -43,7 +44,7 @@ public class TrajectoryManager {
                 File[] listOfFiles = deployDirectory.toFile().listFiles();
     
                 for (var file : listOfFiles) {
-                    // System.out.println(String.format("Adding PathName: %s", pathName));
+                    System.out.printf("INFO: Loading Trajectory: %s%n", file.getName());
                     var trajPack = TrajectoryPacket.generateTrajectoryPacket(file);
     
                     var trajectory =
@@ -51,13 +52,12 @@ public class TrajectoryManager {
                         new Pose2d(trajPack.firstX, trajPack.firstY, Rotation2d.fromDegrees(trajPack.start_angle)),
                         trajPack.path_read,
                         new Pose2d(trajPack.lastX, trajPack.lastY, Rotation2d.fromDegrees(trajPack.end_angle)),
-                        new TrajectoryConfig(3.0, 3.0));
+                        new TrajectoryConfig(Drivetrain.MAX_SPEED, Drivetrain.MAX_ANGULAR_SPEED));
 
-                    System.out.printf("INFO: loading trajectory: %s%n", file.getName());
                     trajectories.put(file.getName(), trajectory);
                 }
                 trajectoriesLock.unlock();
-                System.out.println("INFO: Trajectories loaded");
+                System.out.println("INFO: All Trajectories loaded");
             }
         });
 

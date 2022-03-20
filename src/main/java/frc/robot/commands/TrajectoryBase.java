@@ -125,7 +125,7 @@ public class TrajectoryBase extends CommandBase {
     SmartDashboard.putNumber("Pose R - Actual", a_rotation);
 */
     System.out.printf("INFO: PoseX: %f, PoseY: %f, Rot: %f%n", t_x, t_y, t_rotation);
-    m_drivetrain.fieldSim.setRobotPose(reference.poseMeters);
+//    m_drivetrain.fieldSim.setRobotPose(reference.poseMeters);
   }
 
   // Called once the command ends or is interrupted.
@@ -133,6 +133,7 @@ public class TrajectoryBase extends CommandBase {
   public void end(boolean interrupted) {
     System.out.printf("INFO: TrajectoryBase end: %s%n", m_trajectoryName);
     m_drivetrain.setOdometryDirection(false);
+    m_drivetrain.stop();
   }
 
   // Returns true when the command should end.

@@ -134,7 +134,11 @@ public class Drivetrain extends SubsystemBase
 //        System.out.printf("INFO: xSpeed: %f, rotation: %f%n", xSpeed, rotation);
         setSpeeds(kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0, rotation)));
     }
-    
+
+    public void stop() {
+        setSpeeds(kinematics.toWheelSpeeds(
+                new ChassisSpeeds(0.0, 0.0, 0.0)));
+    }
     
     /** Update robot odometry. */
     public void updateOdometry()
@@ -199,7 +203,7 @@ public class Drivetrain extends SubsystemBase
     public void periodic()
     {
         updateOdometry();
-//        fieldSim.setRobotPose(odometry.getPoseMeters());
+        fieldSim.setRobotPose(odometry.getPoseMeters());
         /*
         var pose = odometry.getPoseMeters();
         var poseTranslation = pose.getTranslation();
